@@ -23,12 +23,12 @@
   },
   "navigation": ["Home", "Play", "Store", "Vote", "Leaderboard", "News", "Events", "Staff", "Discord"],
   "homepage": { "title": "", "subtitle": "" },
-  "social": { "discord": "", "youtube": "", "tiktok": "", "instagram": "" },
+  "social": { "discord": "", "youtube": "",},
   "discord": { "guildId": "", "description": "Join the community for news, support and events." },
   "features": {
     "animations": true, "particles": true, "soundEffects": false, "loadingScreen": true,
     "playerCounter": true, "leaderboard": true, "store": true, "news": true, "events": true,
-    "maintenanceMode": false
+    "maintenanceMode": true
   },
   "maintenanceMessage": "We'll be back shortly.",
   "store": {
