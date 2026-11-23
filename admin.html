@@ -1,0 +1,35 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex"><title>CosmosMC Admin</title>
+<style>body{background:#05070B;color:#fff;font:16px system-ui,sans-serif;margin:0;padding:24px}main{max-width:660px;margin:auto}h1{color:#168BFF}h3{margin:28px 0 0;color:#20E878}label{display:block;margin:14px 0 4px;color:#AAB4C3;font-size:14px}
+input[type=text],input[type=number],input[type=password]{width:100%;box-sizing:border-box;padding:10px;border-radius:8px;border:1px solid #1f3a66;background:#0b1220;color:#fff;font-size:16px}
+.row{display:flex;gap:12px}.row>*{flex:1}.c{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}input[type=color]{width:100%;height:42px;background:none;border:1px solid #1f3a66;border-radius:8px}
+.t{display:flex;gap:10px;align-items:center;margin:10px 0}button{padding:12px 22px;border:0;border-radius:10px;background:#168BFF;color:#fff;font-weight:700;font-size:15px;cursor:pointer;margin:18px 10px 0 0}button.g{background:#1b2638}button.d{background:#8a1f2b}
+#msg{margin-top:16px;padding:10px;border-radius:8px}.ok{background:#0d3a22;color:#20E878}.er{background:#3a1010;color:#ff6b7a}img{max-height:80px;display:block;margin:8px 0}small{color:#AAB4C3}</style></head><body><main>
+<h1>CosmosMC Admin</h1>
+<div id="login"><label>Password</label><input type="password" id="pw" autocomplete="current-password"><button id="go">Log in</button></div>
+<div id="app" hidden>
+<h3>Branding</h3><label>Server name</label><input type="text" id="name" maxlength="40">
+<label>Logo (PNG or WebP, max 2 MB)</label><img id="lp" alt=""><input type="file" id="lf" accept="image/png,image/webp"><button class="g" id="up">Upload logo</button>
+<h3>Colors</h3><div class="c"><div><label>Black</label><input type="color" id="c_black"></div><div><label>White</label><input type="color" id="c_white"></div><div><label>Blue</label><input type="color" id="c_blue"></div><div><label>Green</label><input type="color" id="c_green"></div></div>
+<h3>Java Edition</h3><div class="row"><div><label>IP</label><input type="text" id="javaIP"></div><div><label>Port</label><input type="number" id="javaPort"></div></div>
+<h3>Bedrock Edition</h3><div class="row"><div><label>IP</label><input type="text" id="bedrockIP"></div><div><label>Port</label><input type="number" id="bedrockPort"></div></div>
+<h3>Links</h3><label>Discord invite URL</label><input type="text" id="discord" placeholder="https://discord.gg/..."><label>YouTube URL</label><input type="text" id="youtube" placeholder="https://youtube.com/...">
+<h3>Features</h3><div id="tg"></div><label>Status refresh (ms, 5000 or more)</label><input type="number" id="statusRefresh">
+<button id="save">Save</button><button class="d" id="reset">Reset to defaults</button><button class="g" id="out">Log out</button></div>
+<div id="msg" hidden></div></main>
+<script>
+const $=s=>document.querySelector(s),J=async(u,m="GET",b)=>{const r=await fetch(u,{method:m,headers:b?{"Content-Type":"application/json"}:{},body:b?JSON.stringify(b):undefined});const d=await r.json().catch(()=>({}));if(!r.ok)throw d;return d};
+const say=(t,ok)=>{const m=$("#msg");m.hidden=false;m.className=ok?"ok":"er";m.textContent=t};
+const TG={showPlayers:"Show player count",showStatus:"Show server status",animations:"Animations",particles:"Particles",sound:"Sound effects",maintenance:"Maintenance mode (hides the site)"};
+$("#tg").innerHTML=Object.entries(TG).map(([k,v])=>`<label class="t"><input type="checkbox" id="t_${k}"> ${v}</label>`).join("");
+const TXT=["name","javaIP","bedrockIP","discord","youtube"],NUM=["javaPort","bedrockPort","statusRefresh"],COL=["black","white","blue","green"];
+function fill(c){TXT.forEach(k=>$("#"+k).value=c[k]||"");NUM.forEach(k=>$("#"+k).value=c[k]);COL.forEach(k=>$("#c_"+k).value=c.colors[k]);Object.keys(TG).forEach(k=>$("#t_"+k).checked=!!c[k]);$("#lp").src=c.logo}
+async function show(){try{fill(await J("/api/admin/config"));$("#login").hidden=true;$("#app").hidden=false}catch{$("#login").hidden=false;$("#app").hidden=true}}
+$("#go").onclick=async()=>{try{await J("/api/login","POST",{password:$("#pw").value});$("#pw").value="";$("#msg").hidden=true;show()}catch(e){say(e.error||"Login failed")}};
+$("#pw").onkeydown=e=>{if(e.key==="Enter")$("#go").click()};
+$("#save").onclick=async()=>{const b={colors:{}};TXT.forEach(k=>b[k]=$("#"+k).value.trim());NUM.forEach(k=>b[k]=parseInt($("#"+k).value,10));COL.forEach(k=>b.colors[k]=$("#c_"+k).value);Object.keys(TG).forEach(k=>b[k]=$("#t_"+k).checked);
+ try{fill(await J("/api/admin/config","PUT",b));say("Saved. Reload your site to see the changes.",1)}catch(e){say(e.error||"Save failed")}};
+$("#reset").onclick=async()=>{if(!confirm("Reset ALL settings to defaults?"))return;try{fill(await J("/api/admin/reset","POST",{}));say("Reset to defaults.",1)}catch(e){say(e.error||"Reset failed")}};
+$("#up").onclick=()=>{const f=$("#lf").files[0];if(!f)return say("Choose a file first");if(f.size>2e6)return say("Image must be under 2 MB");const r=new FileReader();r.onload=async()=>{try{const d=await J("/api/admin/logo","POST",{data:r.result.split(",")[1]});$("#lp").src=d.logo;say("Logo updated.",1)}catch(e){say(e.error||"Upload failed")}};r.readAsDataURL(f)};
+$("#out").onclick=async()=>{await J("/api/admin/logout","POST",{}).catch(()=>{});show()};
+show();
+</script></body></html>

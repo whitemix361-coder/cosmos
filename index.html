@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>CosmosMC — Explore. Survive. Dominate.</title>
+<meta name="description" content="CosmosMC is a premium Minecraft network. Join live, climb the leaderboard, grab a rank.">
+<meta property="og:title" content="CosmosMC — Minecraft Network"><meta property="og:description" content="Explore. Survive. Dominate.">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--ok:#20E878;--bg:#05070B;--blue:#168BFF;--glow:#168BFF;--w:#fff;--mut:#8fa3c4;--glass:rgba(20,40,80,.28);--line:rgba(80,160,255,.25)}
+*{box-sizing:border-box;margin:0}html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--w);font:600 17px/1.5 Rajdhani,sans-serif;min-height:100vh;overflow-x:hidden}
+#fx{position:fixed;inset:0;z-index:0;pointer-events:none}
+body:before{content:"";position:fixed;inset:0;z-index:0;background:radial-gradient(60% 50% at 50% 0,rgba(30,144,255,.28),transparent),radial-gradient(40% 40% at 90% 80%,rgba(0,179,255,.12),transparent)}
+#cur{position:fixed;width:280px;height:280px;margin:-140px;border-radius:50%;background:radial-gradient(circle,rgba(30,144,255,.14),transparent 65%);pointer-events:none;z-index:1}
+#load{position:fixed;inset:0;z-index:99;background:var(--bg);display:grid;place-items:center;transition:opacity .6s,visibility .6s}
+#load.off{opacity:0;visibility:hidden}#load img{width:min(260px,60vw);animation:pulse 1.2s infinite}
+@keyframes pulse{50%{transform:scale(1.1);filter:drop-shadow(0 0 25px var(--glow))}}
+nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:8px;padding:10px 4vw;background:rgba(4,6,13,.7);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+nav .brand{font:900 20px Orbitron;display:flex;align-items:center;gap:10px;margin-right:auto;color:var(--w);text-decoration:none}
+nav .brand img{height:42px;width:auto}
+nav a.l{color:var(--mut);text-decoration:none;padding:8px 14px;border-radius:8px;transition:.25s;font-size:18px}
+nav a.l:hover{color:var(--w);background:var(--glass)}
+nav a.l.on{color:var(--w);background:rgba(30,144,255,.2);box-shadow:0 0 18px rgba(30,144,255,.55),inset 0 0 0 1px var(--blue)}
+#burger{display:none;background:none;border:1px solid var(--line);color:var(--w);font-size:22px;padding:2px 12px;border-radius:8px}
+main{position:relative;z-index:2}
+.page{display:none;max-width:1150px;margin:auto;padding:50px 5vw 80px;animation:in .5s}.page.on{display:block}
+@keyframes in{from{opacity:0;transform:translateY(12px)}}
+.hero{text-align:center;padding:50px 0 30px}
+.logo{width:min(440px,82vw);height:auto;filter:drop-shadow(0 0 28px rgba(22,139,255,.7)) drop-shadow(0 0 44px rgba(32,232,120,.3));animation:float 5s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-10px)}}
+h1{font:900 clamp(44px,10vw,112px)/1 Orbitron;letter-spacing:.04em;margin:14px 0;text-shadow:0 0 14px var(--glow),0 0 60px var(--blue)}
+.tag{letter-spacing:.35em;color:var(--glow);font-size:clamp(14px,2.4vw,22px)}
+.btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin:34px 0}
+.btn{font:800 17px Orbitron;letter-spacing:.08em;padding:15px 34px;border-radius:12px;border:1px solid var(--blue);background:var(--glass);color:var(--w);cursor:pointer;text-decoration:none;transition:.25s;display:inline-block;backdrop-filter:blur(8px)}
+.btn:hover{transform:translateY(-3px);box-shadow:0 0 30px rgba(30,144,255,.7)}
+.btn.p{background:linear-gradient(135deg,#1e90ff,#0066ff);box-shadow:0 0 24px rgba(30,144,255,.55)}
+.btn.ok{background:#0a8f4e;border-color:var(--ok);animation:pop .4s}
+@keyframes pop{50%{transform:scale(1.08)}}
+.card{background:var(--glass);border:1px solid var(--line);border-radius:18px;padding:26px;backdrop-filter:blur(14px);transition:.3s}
+.card:hover{border-color:var(--blue);box-shadow:0 0 34px rgba(30,144,255,.35);transform:translateY(-4px)}
+.status{max-width:640px;margin:0 auto;text-align:center}
+.dot{display:inline-block;width:14px;height:14px;border-radius:50%;margin-right:8px;vertical-align:middle;background:#777}
+.dot.on{background:var(--ok);box-shadow:0 0 14px var(--ok);animation:blink 1.6s infinite}.dot.st{background:#ffd23f;box-shadow:0 0 14px #ffd23f}.dot.sl{background:#ff9a3c;box-shadow:0 0 14px #ff9a3c}.dot.un{background:#9aa4b5}.dot.off{background:#ff3b4e;box-shadow:0 0 14px #ff3b4e}
+@keyframes blink{50%{opacity:.45}}
+.count{font:900 clamp(34px,7vw,56px) Orbitron;margin:8px 0;transition:.3s}.count.bump{transform:scale(1.15);color:var(--glow);text-shadow:0 0 20px var(--glow)}
+.meta{display:flex;justify-content:center;gap:22px;color:var(--mut);flex-wrap:wrap}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:22px;margin-top:28px}
+h2{font:800 clamp(26px,5vw,40px) Orbitron;margin-bottom:6px;text-shadow:0 0 18px rgba(30,144,255,.7)}
+.sub{color:var(--mut);margin-bottom:8px}
+.price{font:900 34px Orbitron;color:var(--glow);margin:8px 0}.price small{font-size:14px;color:var(--mut)}
+.rank ul{list-style:none;padding:0;margin:14px 0 20px;color:var(--mut)}.rank li:before{content:"◆ ";color:var(--blue)}
+.rank.feat{border-color:var(--glow);box-shadow:0 0 40px rgba(0,179,255,.4);position:relative}
+.rank.feat:after{content:"FEATURED";position:absolute;top:-12px;right:18px;background:var(--blue);font:800 12px Orbitron;padding:4px 12px;border-radius:99px}
+.rank h3{font:800 24px Orbitron}
+.tabs{display:flex;gap:10px;margin:22px 0 6px;flex-wrap:wrap}.tabs .btn{padding:9px 22px;font-size:14px}.tabs .btn.sel{background:var(--blue)}
+table{width:100%;border-collapse:collapse}th,td{padding:12px 10px;text-align:left;border-bottom:1px solid var(--line)}
+th{color:var(--mut);font:700 13px Orbitron}tr:hover td{background:rgba(30,144,255,.08)}
+.pl{display:flex;align-items:center;gap:12px}.pl img{width:34px;height:34px;border-radius:6px;image-rendering:pixelated}
+.badge{font:800 12px Orbitron;padding:3px 10px;border-radius:99px;border:1px solid var(--blue);background:rgba(30,144,255,.18)}
+.note{color:var(--mut);font-size:15px;margin-top:14px}
+.wrap{overflow-x:auto}
+.addr{display:inline-block;font:800 clamp(16px,3.4vw,26px) Orbitron;padding:10px 22px;border:1px dashed var(--blue);border-radius:12px;background:rgba(30,144,255,.12);margin-top:6px;word-break:break-all}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px;margin-top:34px}
+.ed h3{font:800 22px Orbitron;display:flex;align-items:center;gap:10px}.ed svg{width:34px;height:34px}
+.row{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);flex-wrap:wrap}.row code{color:var(--glow);font:700 17px Orbitron;word-break:break-all}
+.row .btn{padding:6px 14px;font-size:12px}.mini{color:var(--mut);font-size:15px}.mini b{font-weight:700}
+.fl{height:90px;width:auto;margin-bottom:12px}
+nav{transition:.3s}nav.sc{background:rgba(5,7,11,.95)}.noanim *{animation:none!important;transition:none!important}
+#cfgerr{position:relative;z-index:30;background:#3a1010;border-bottom:1px solid #ff3b4e;padding:10px 5vw;font-size:15px}
+#maint{position:fixed;inset:0;z-index:98;background:var(--bg);display:none;place-items:center;text-align:center;padding:20px}#maint.on{display:grid}
+footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:34px 5vw;text-align:center;color:var(--mut);background:rgba(4,6,13,.8)}
+footer .soc{display:flex;gap:18px;justify-content:center;margin-bottom:14px;flex-wrap:wrap}footer a{color:var(--w);text-decoration:none}footer a:hover{color:var(--glow)}
+@media(max-width:860px){#burger{display:block}nav .links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:rgba(4,6,13,.96);padding:10px 4vw}nav .links.open{display:flex}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media(hover:none){#cur{display:none}}
+</style><script>window.FALLBACK="data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#00b3ff"/><stop offset="1" stop-color="#0050ff"/></linearGradient></defs><path d="M50 6 90 28v44L50 94 10 72V28z" fill="#070b18" stroke="url(#g)" stroke-width="5"/><path d="M64 36a20 20 0 1 0 0 28" fill="none" stroke="#fff" stroke-width="9" stroke-linecap="round"/></svg>');</script>
+</head><body>
+<div id="load"><img data-logo src="/images/cosmosmc-logo.png" alt="CosmosMC" onerror="this.src=FALLBACK"></div>
+<canvas id="fx"></canvas><div id="cur"></div>
+<nav><a class="brand" href="#home"><img data-logo src="/images/cosmosmc-logo.png" alt="" onerror="this.src=FALLBACK">CosmosMC</a>
+<button id="burger" aria-label="Menu">☰</button>
+<div class="links" style="display:contents"></div></nav>
+<div id="cfgerr" hidden></div>
+<div id="maint"><div><img data-logo class="logo" src="/images/cosmosmc-logo.png" alt="CosmosMC" onerror="this.src=FALLBACK"><h2>Under maintenance</h2><p class="sub" id="maintmsg"></p></div></div>
+<main>
+<section class="page" id="home">
+ <div class="hero"><img class="logo" data-logo src="/images/cosmosmc-logo.png" alt="CosmosMC logo" onerror="this.src=FALLBACK">
+ <h1>CosmosMC</h1><p class="tag">EXPLORE. SURVIVE. DOMINATE.</p>
+ <div class="btns"><button class="btn p" id="join">JOIN NOW</button><button class="btn" id="copy">COPY IP</button></div></div>
+ <div class="card status"><div><span class="dot" id="dot"></span><b id="state">CHECKING…</b></div>
+ <div id="pl"><div class="count" id="count">— / —</div><div>PLAYERS ONLINE</div></div>
+ <div class="meta"><span id="ver">Version —</span><span id="ping">Ping —</span></div>
+ <div class="meta" style="margin-top:10px"><span><span class="dot" id="jdot"></span>Java: <b id="jst">…</b></span><span><span class="dot" id="bdot"></span>Bedrock: <b id="bst">…</b></span></div>
+ <p class="note" id="err" hidden></p></div>
+ <div id="joinsec" class="two">
+  <div class="card ed"><h3><svg viewBox="0 0 32 32"><path d="M16 2 28 9v14l-12 7-12-7V9z" fill="#0b1b3a" stroke="#1e90ff" stroke-width="2"/><path d="M10 12l6 3 6-3M16 15v9" stroke="#00b3ff" stroke-width="2" fill="none"/></svg>JAVA EDITION</h3><p class="mini">PC, Mac, Linux</p>
+   <div class="row"><span class="mini">IP</span><code>%IP%</code><button class="btn" data-copy="%IP%">COPY IP</button></div>
+   <div class="row"><span class="mini">PORT</span><code>%JP%</code><button class="btn" data-copy="%JP%">COPY PORT</button></div>
+   <p class="mini" style="margin-top:12px">Multiplayer → Add Server → paste the IP. Port 25565 is the default, so you can leave it blank.</p></div>
+  <div class="card ed"><h3><svg viewBox="0 0 32 32"><rect x="4" y="4" width="24" height="24" rx="5" fill="#0b1b3a" stroke="#1e90ff" stroke-width="2"/><path d="M10 22V10h6a3 3 0 0 1 0 6h-6M16 16h1a3 3 0 0 1 0 6h-7" stroke="#00b3ff" stroke-width="2" fill="none"/></svg>BEDROCK / POCKET EDITION</h3><p class="mini">Windows, Xbox, PlayStation, Switch, mobile</p>
+   <div class="row"><span class="mini">IP</span><code>%BIP%</code><button class="btn" data-copy="%BIP%">COPY IP</button></div>
+   <div class="row"><span class="mini">PORT</span><code>%BP%</code><button class="btn" data-copy="%BP%">COPY PORT</button></div>
+   <p class="mini" style="margin-top:12px">Servers → Add Server → enter the IP and port.</p></div>
+ </div>
+ <div id="modes" hidden><h2 style="margin-top:36px">Game modes</h2><div class="grid" id="modegrid"></div></div>
+</section>
+<section class="page" id="store"><h2>Store</h2><p class="sub">Support CosmosMC and unlock perks.</p>
+ <div class="tabs" id="cats"></div><div class="grid" id="ranks"></div>
+ <p class="note" id="storenote" hidden></p></section>
+<section class="page" id="vote"><h2>Vote</h2><p class="sub">Vote daily for in-game rewards.</p><div class="grid" id="votes"></div></section>
+<section class="page" id="leaderboard"><h2>Leaderboard</h2><p class="sub" id="lbsub"></p>
+ <div class="tabs" id="lbtabs"></div><div class="card wrap"><table><thead><tr><th>#</th><th>PLAYER</th><th>RANK</th><th id="lbh">COINS</th></tr></thead><tbody id="lb"></tbody></table></div></section>
+<section class="page" id="news"><h2>News</h2><p class="sub">Server updates and community news.</p><div id="newslist"></div></section>
+<section class="page" id="events"><h2>Events</h2><p class="sub">Upcoming tournaments and prizes.</p><div id="evlist"></div></section>
+<section class="page" id="forums"><h2>Forums</h2><p class="sub">Discuss, report bugs, suggest features.</p>
+ <div class="grid" id="forumgrid"></div></section>
+<section class="page" id="staff"><h2>Staff</h2><p class="sub">The team keeping CosmosMC running.</p><div class="grid" id="staffgrid"></div></section>
+<section class="page" id="discord"><h2>Discord</h2><p class="sub">Chat with the community.</p>
+ <div class="card"><h3 id="dname">CosmosMC Discord</h3><p class="sub" id="dinfo">Join for announcements, support and events.</p>
+ <div class="btns" style="justify-content:flex-start"><a class="btn p" id="dlink" target="_blank" rel="noopener">JOIN OUR DISCORD</a></div></div></section>
+</main>
+<footer><img class="fl" data-logo src="/images/cosmosmc-logo.png" alt="CosmosMC" onerror="this.src=FALLBACK"><div class="soc" id="soc"></div>© <span id="yr"></span> <span id="wn"></span>. Not affiliated with Mojang or Microsoft.</footer>
+<script type="module">
+const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const head=n=>`https://mc-heads.net/avatar/${encodeURIComponent(n)}/64`;
+/* ---- config.json loader ---- */
+const DEF={branding:{websiteName:"CosmosMC",tagline:"EXPLORE. SURVIVE. DOMINATE.",description:"CosmosMC Minecraft network.",logo:"/images/cosmosmc-logo.png",loadingLogo:"",favicon:"/images/favicon.png",backgroundImage:""},theme:{primary:"#168BFF",secondary:"#20E878",background:"#05070B",surface:"#10151F",text:"#FFFFFF",muted:"#AAB4C3"},server:{java:{enabled:true,ip:"cosmosmc.play.minekube.net",port:25565},bedrock:{enabled:true,ip:"cosmosmc.play.minekube.net",port:19132},status:{enabled:true,refreshInterval:15000}},navigation:["Home","Play","Store","Vote","Leaderboard","News","Staff","Discord"],homepage:{title:"",subtitle:""},social:{},discord:{guildId:"",description:""},features:{animations:true,particles:true,soundEffects:false,loadingScreen:true,playerCounter:true,leaderboard:true,store:true,news:true,events:true,maintenanceMode:false},maintenanceMessage:"We'll be back shortly.",store:{checkoutUrl:"",categories:{}},gameModes:[],vote:{sites:[]},leaderboard:{url:""},forums:[],staff:[],news:[],events:[]};
+function merge(d,u,p,e){if(u===undefined||u===null)return d;
+ if(Array.isArray(d)){if(Array.isArray(u))return u;e.push(p+" must be a list");return d}
+ if(typeof d==="object"){if(typeof u!=="object"||Array.isArray(u)){e.push(p+" must be an object");return d}const o={...u};for(const k in d)o[k]=merge(d[k],u[k],p?p+"."+k:k,e);return o}
+ if(typeof u!==typeof d){e.push(p+" must be a "+typeof d);return d}return u}
+function check(c,e){for(const k in c.theme)if(!/^#[0-9a-f]{6}$/i.test(c.theme[k])){e.push("theme."+k+" must be a #RRGGBB color");c.theme[k]=DEF.theme[k]}
+ for(const k of["java","bedrock"]){const v=c.server[k];if(!(v.port>=1&&v.port<=65535)){e.push(`server.${k}.port must be 1-65535`);v.port=DEF.server[k].port}if(!v.ip.trim()){e.push(`server.${k}.ip is empty`);v.ip=DEF.server[k].ip}}
+ if(c.server.status.refreshInterval<5000){e.push("server.status.refreshInterval must be at least 5000 ms");c.server.status.refreshInterval=5000}}
+let raw={};const errs=[];
+try{const r=await fetch("/config.json",{cache:"no-store"});if(!r.ok)throw 0;raw=await r.json()}catch{errs.push("Could not read or parse config.json. Using defaults. Serve the folder over http(s); opening index.html directly won't load it.")}
+const K=raw.colors||{},N={branding:{websiteName:raw.name,tagline:raw.tagline,description:raw.description,logo:raw.logo,favicon:raw.favicon,loadingLogo:raw.loadingLogo,backgroundImage:raw.backgroundImage},theme:{background:K.black,text:K.white,primary:K.blue,secondary:K.green},server:{java:{ip:raw.javaIP,port:raw.javaPort},bedrock:{ip:raw.bedrockIP,port:raw.bedrockPort},status:{enabled:raw.showStatus,refreshInterval:raw.statusRefresh}},social:{discord:raw.discord,youtube:raw.youtube,tiktok:raw.tiktok,instagram:raw.instagram},features:{playerCounter:raw.showPlayers,animations:raw.animations,particles:raw.particles,soundEffects:raw.sound,maintenanceMode:raw.maintenance,loadingScreen:raw.loadingScreen},navigation:raw.navigation,homepage:{title:raw.homepageTitle,subtitle:raw.homepageSubtitle},maintenanceMessage:raw.maintenanceMessage,store:raw.store,gameModes:raw.gameModes,vote:raw.vote,leaderboard:{url:raw.leaderboardURL},discord:{guildId:raw.discordGuildId,description:raw.discordText},forums:raw.forums,staff:raw.staff,news:raw.news,events:raw.events};
+const C=merge(DEF,N,"",errs);check(C,errs);
+const B=C.branding,F=C.features,T=C.theme,SV=C.server,RS=document.documentElement.style;
+const CFG={IP:SV.java.ip,JAVA_PORT:String(SV.java.port),BIP:SV.bedrock.ip,BEDROCK_PORT:String(SV.bedrock.port),REFRESH_MS:SV.status.refreshInterval,DISCORD:C.social.discord||"",DISCORD_GUILD_ID:C.discord.guildId,STORE_URL:C.store.checkoutUrl,LEADERBOARD_URL:C.leaderboard.url,
+ SOCIAL:Object.fromEntries(Object.entries(C.social).filter(([k,v])=>v)),VOTE_SITES:C.vote.sites.filter(v=>v.url).map(v=>({n:v.name,u:v.url})),
+ STORE:Object.fromEntries(Object.entries(C.store.categories).map(([k,a])=>[k,a.map(x=>({n:x.name,p:x.price,f:x.benefits||[],feat:x.featured,d:x.description,disc:x.discount}))])),
+ STAFF:C.staff.map(x=>({n:x.name,r:x.role})),FORUMS:C.forums.map(x=>({n:x.name,d:x.description}))};
+if(errs.length){console.warn("config.json:",errs);if(!location.hostname||/^(localhost|127\.)/.test(location.hostname)){$("#cfgerr").hidden=false;$("#cfgerr").innerHTML="<b>config.json:</b> "+errs.map(esc).join(" · ")}}
+/* apply theme, branding, features */
+[["--bg",T.background],["--blue",T.primary],["--glow",T.primary],["--ok",T.secondary],["--w",T.text],["--mut",T.muted]].forEach(([k,v])=>RS.setProperty(k,v));
+document.title=B.websiteName+" — "+B.tagline;document.querySelector('meta[name=description]').content=B.description;
+let fav=document.querySelector("link[rel=icon]");if(!fav){fav=document.createElement("link");fav.rel="icon";document.head.append(fav)}fav.href=B.favicon;
+document.querySelectorAll("img[data-logo]").forEach(i=>{i.src=(i.closest("#load")&&B.loadingLogo)||B.logo});
+$(".brand").lastChild.textContent=B.websiteName;$("#wn").textContent=B.websiteName;$("h1").textContent=C.homepage.title||B.websiteName;$(".tag").textContent=B.tagline;
+if(C.homepage.subtitle){const p=document.createElement("p");p.className="sub";p.textContent=C.homepage.subtitle;$(".tag").after(p)}
+if(B.backgroundImage)document.body.style.background=`linear-gradient(rgba(5,7,11,.8),rgba(5,7,11,.95)),url("${encodeURI(B.backgroundImage)}") center/cover fixed`;
+if(!F.animations)document.documentElement.classList.add("noanim");
+if(!F.particles)$("#fx").hidden=true;if(!F.loadingScreen)$("#load").remove();
+if(F.maintenanceMode){$("#maint").classList.add("on");$("#maintmsg").textContent=C.maintenanceMessage}
+if(!SV.status.enabled)$(".status").hidden=true;if(!F.playerCounter)$("#pl").hidden=true;
+if(!SV.bedrock.enabled){document.querySelectorAll(".ed")[1].hidden=true;$("#bdot").parentElement.hidden=true}
+if(!SV.java.enabled){document.querySelectorAll(".ed")[0].hidden=true;$("#jdot").parentElement.hidden=true}
+addEventListener("scroll",()=>$("nav").classList.toggle("sc",scrollY>30),{passive:true});
+/* nav */
+const ALIAS={ranks:"store"},OFF={store:!F.store,leaderboard:!F.leaderboard,news:!F.news,events:!F.events};
+const KNOWN=["home","play","store","vote","leaderboard","news","events","forums","staff","discord"];
+const NAV=C.navigation.map(n=>typeof n==="string"?{label:n,page:ALIAS[n.toLowerCase()]||n.toLowerCase()}:{label:n.label,page:(n.page||"").toLowerCase(),href:n.href}).filter(n=>n.label&&(n.href||(KNOWN.includes(n.page)&&!OFF[n.page])));
+const PAGES=["home",...NAV.filter(n=>!n.href).map(n=>n.page)];
+$(".links").style.cssText="";$(".links").className="links";
+$(".links").innerHTML=NAV.map(n=>n.href?`<a class="l" href="${esc(n.href)}" target="_blank" rel="noopener">${esc(n.label)}</a>`:`<a class="l" href="#${n.page}" data-p="${n.page}">${esc(n.label)}</a>`).join("");
+$("nav").insertBefore($(".links"),$("#burger"));
+$("#burger").onclick=()=>$(".links").classList.toggle("open");
+function route(){let p=location.hash.slice(1);const play=p==="play";if(play)p="home";if(!PAGES.includes(p))p="home";
+ document.querySelectorAll(".page").forEach(e=>e.classList.toggle("on",e.id===p));
+ document.querySelectorAll("nav a.l").forEach(a=>a.classList.toggle("on",a.dataset.p===p));
+ $(".links").classList.remove("open");play?setTimeout(()=>$("#joinsec").scrollIntoView({behavior:"smooth"}),60):scrollTo({top:0});}
+addEventListener("hashchange",route);route();
+/* ip buttons */
+const addr=CFG.IP+(CFG.JAVA_PORT&&CFG.JAVA_PORT!=="25565"?":"+CFG.JAVA_PORT:""); // copied/shown address (default port is implicit)
+const bport=CFG.BEDROCK_PORT||"19132";document.querySelectorAll("[data-copy]").forEach(b=>{b.dataset.copy=b.dataset.copy.replace("%IP%",CFG.IP).replace("%BIP%",CFG.BIP).replace("%JP%",CFG.JAVA_PORT||"25565").replace("%BP%",bport);const c=b.closest(".row").querySelector("code");c.textContent=c.textContent.replace("%IP%",CFG.IP).replace("%BIP%",CFG.BIP).replace("%JP%",CFG.JAVA_PORT||"25565").replace("%BP%",bport);b.onclick=()=>{doCopy(b.dataset.copy);const o=b.textContent;b.textContent="✓ COPIED";setTimeout(()=>b.textContent=o,1500)}});
+const qaddr=CFG.IP+":"+(CFG.JAVA_PORT||25565);
+
+$("#join").onclick=()=>$("#joinsec").scrollIntoView({behavior:"smooth"});
+async function doCopy(v){try{await navigator.clipboard.writeText(v)}catch{const t=document.createElement("textarea");t.value=v;document.body.append(t);t.select();document.execCommand("copy");t.remove()}}
+async function copyIP(){await doCopy(CFG.IP); const b=$("#copy");b.textContent="✓ COPIED!";b.classList.add("ok");setTimeout(()=>{b.textContent="COPY IP";b.classList.remove("ok")},1800)}
+$("#copy").onclick=copyIP;
+/* live status (heartbeat via /api/status) */
+let last=null;
+const ST={online:["ONLINE","on","var(--ok)"],offline:["OFFLINE","off","#ff3b4e"],starting:["STARTING","st","#ffd23f"],sleeping:["SLEEPING","sl","#ff9a3c"],unknown:["UNKNOWN","un","#9aa4b5"]};
+function chip(id,k){const[t,c,col]=ST[k];$("#"+id+"dot").className="dot "+c;$("#"+id+"st").textContent=t[0]+t.slice(1).toLowerCase();$("#"+id+"st").style.color=col}
+/* Status comes ONLY from /api/status (a heartbeat sent by the real server). The browser never pings the Minecraft address, so it can't wake the server. */
+async function status(){let d;
+ try{const r=await fetch("/api/status",{cache:"no-store"});if(!r.ok)throw 0;d=await r.json()}catch{d={state:"unknown",reason:"Status service unreachable."}}
+ const k=ST[d.state]?d.state:"unknown",[t,c,col]=ST[k],on=k==="online";
+ $("#dot").className="dot "+c;$("#state").textContent=t;$("#state").style.color=col;
+ if(on){const o=d.players;$("#count").textContent=`${o} / ${d.max}`;if(last!==null&&last!==o){$("#count").classList.add("bump");setTimeout(()=>$("#count").classList.remove("bump"),400)}last=o}else{$("#count").textContent="— / —";last=null}
+ $("#ver").textContent=on&&d.version?"Version "+d.version:"Version —";$("#ping").textContent=d.age!=null?"Updated "+d.age+"s ago":"";
+ chip("j",k);chip("b",d.bedrock===true?"online":d.bedrock===false?"offline":"unknown");
+ $("#err").hidden=!d.reason;$("#err").textContent=d.reason||""}
+if(SV.status.enabled){status();setInterval(status,CFG.REFRESH_MS)}
+/* announcements, vote, staff, forums, discord, social */
+$("#votes").innerHTML=CFG.VOTE_SITES.map((v,i)=>`<div class="card"><h3>Vote #${i+1}</h3><p class="sub">${esc(v.n)}</p><a class="btn p" href="${esc(v.u)}" target="_blank" rel="noopener">VOTE NOW</a></div>`).join("");
+$("#staffgrid").innerHTML=CFG.STAFF.map(s=>`<div class="card pl" style="flex-direction:column;text-align:center"><img src="${head(s.n)}" alt="" style="width:80px;height:80px"><h3>${esc(s.n)}</h3><span class="badge">${esc(s.r)}</span></div>`).join("");
+$("#forumgrid").innerHTML=CFG.FORUMS.map(f=>`<div class="card"><h3>${esc(f.n)}</h3><p class="sub">${esc(f.d)}</p><a class="btn" href="${esc(CFG.DISCORD)}" target="_blank" rel="noopener">OPEN</a></div>`).join("");
+if(C.discord.description)$("#dinfo").textContent=C.discord.description;
+if(CFG.DISCORD)$("#dlink").href=CFG.DISCORD;else{$("#dlink").hidden=true;$("#dinfo").textContent="Discord invite not set. Add social.discord in config.json."}
+if(CFG.DISCORD_GUILD_ID)fetch(`https://discord.com/api/guilds/${CFG.DISCORD_GUILD_ID}/widget.json`).then(r=>r.json()).then(d=>{$("#dname").textContent=d.name;$("#dinfo").textContent=d.presence_count+" members online"}).catch(()=>{});
+$("#soc").innerHTML=Object.entries(CFG.SOCIAL).map(([k,v])=>`<a href="${esc(v)}" target="_blank" rel="noopener">${esc(k)}</a>`).join("");
+$("#yr").textContent=new Date().getFullYear();
+/* store */
+let cat=Object.keys(CFG.STORE)[0]||"";if(!CFG.STORE_URL&&(!location.hostname||/^(localhost|127\.)/.test(location.hostname))){$("#storenote").hidden=false;$("#storenote").textContent="Dev note: checkout is not connected. Set store.checkoutUrl in config.json."}
+function buy(n,p){if(CFG.STORE_URL)open(CFG.STORE_URL,"_blank");else alert(`Checkout not connected yet.\nThe owner has not set up checkout yet.\n\nItem: ${n} ($${p})`)}
+function drawStore(){$("#cats").innerHTML=Object.keys(CFG.STORE).map(c=>`<button class="btn ${c===cat?"sel":""}" data-c="${c}">${c.toUpperCase()}</button>`).join("");
+ $("#cats").onclick=e=>{if(e.target.dataset.c){cat=e.target.dataset.c;drawStore()}};
+ $("#ranks").innerHTML=(CFG.STORE[cat]||[]).map((r,i)=>`<div class="card rank ${r.feat?"feat":""}"><h3>${esc(r.n)}</h3>${r.disc?`<span class="badge" style="border-color:var(--ok);color:var(--ok)">${esc(r.disc)}</span>`:""}${r.d?`<p class="sub">${esc(r.d)}</p>`:""}<div class="price">$${r.p}<small> one-time</small></div><ul>${r.f.map(f=>`<li>${esc(f)}</li>`).join("")}</ul><button class="btn p" data-i="${i}">PURCHASE</button></div>`).join("");
+ $("#ranks").onclick=e=>{const i=e.target.dataset.i;if(i!=null){const r=CFG.STORE[cat][i];buy(r.n,r.p)}}}
+drawStore();
+/* leaderboard: endpoint returns [{name,rank,coins,kills,playtime}] */
+const DEMO=[{name:"Notch",rank:"Galaxy",coins:98500,kills:412,playtime:310},{name:"jeb_",rank:"Quasar",coins:75200,kills:366,playtime:280},{name:"Dinnerbone",rank:"Nova",coins:61000,kills:290,playtime:250},{name:"Grumm",rank:"Nova",coins:44300,kills:201,playtime:190},{name:"Searge",rank:"Member",coins:30100,kills:150,playtime:120}];
+let LB=DEMO,key="coins";const COLS={coins:"COINS",kills:"KILLS",playtime:"PLAYTIME (H)"};
+function drawLB(){$("#lbtabs").innerHTML=Object.keys(COLS).map(k=>`<button class="btn ${k===key?"sel":""}" data-k="${k}">${COLS[k]}</button>`).join("");
+ $("#lbh").textContent=COLS[key];
+ $("#lb").innerHTML=[...LB].sort((a,b)=>b[key]-a[key]).map((p,i)=>`<tr><td>${i+1}</td><td><div class="pl"><img src="${head(p.name)}" alt="">${esc(p.name)}</div></td><td><span class="badge">${esc(p.rank)}</span></td><td>${Number(p[key]).toLocaleString()}</td></tr>`).join("")}
+$("#lbtabs").onclick=e=>{if(e.target.dataset.k){key=e.target.dataset.k;drawLB()}};
+async function loadLB(){if(!CFG.LEADERBOARD_URL){$("#lbsub").textContent="Demo data. Set LEADERBOARD_URL to show real stats.";drawLB();return}
+ try{const r=await fetch(CFG.LEADERBOARD_URL);LB=await r.json();$("#lbsub").textContent="Live stats from the server."}catch{$("#lbsub").textContent="Could not load live stats. Showing demo data."}drawLB()}
+loadLB();
+
+/* game modes, news, events, empty states */
+const GM=C.gameModes.filter(g=>g.enabled!==false&&g.name);
+if(GM.length){$("#modes").hidden=false;$("#modegrid").innerHTML=GM.map(g=>`<div class="card">${g.image?`<img src="${esc(g.image)}" alt="" loading="lazy" style="width:100%;border-radius:12px;margin-bottom:10px">`:""}<h3>${esc(g.name)}</h3><p class="sub">${esc(g.description||"")}</p></div>`).join("")}
+const D=d=>new Date(d);
+$("#newslist").innerHTML=[...C.news].sort((a,b)=>D(b.date)-D(a.date)).map(n=>`<div class="card" style="margin-top:18px;${n.featured?"border-color:var(--ok)":""}">${n.featured?'<span class="badge" style="border-color:var(--ok)">FEATURED</span>':""}<h3>${esc(n.title||"")}</h3><p class="mini">${esc(n.date||"")}</p><p class="sub">${esc(n.body||"")}</p></div>`).join("")||'<p class="note">No news yet.</p>';
+const EV=C.events.filter(e=>!isNaN(D(e.date)));
+function drawEv(){const now=Date.now(),up=EV.filter(e=>D(e.date)>now).sort((a,b)=>D(a.date)-D(b.date)),past=EV.filter(e=>D(e.date)<=now);
+ const cd=t=>{const s=Math.max(0,(t-now)/1000|0);return `${s/86400|0}d ${s%86400/3600|0}h ${s%3600/60|0}m ${s%60}s`};
+ $("#evlist").innerHTML=(up.map(e=>`<div class="card" style="margin-top:18px"><h3>${esc(e.name||"")}</h3><div class="count" style="font-size:30px">${cd(D(e.date))}</div><p class="sub">${esc(e.description||"")}${e.prize?" Prize: "+esc(e.prize):""}</p></div>`).join("")||'<p class="note">No upcoming events.</p>')+(past.length?"<h3 style='margin-top:30px'>Previous events</h3>"+past.map(e=>`<div class="card" style="margin-top:12px"><b>${esc(e.name||"")}</b> <span class="mini">${esc(e.date)}</span></div>`).join(""):"")}
+drawEv();setInterval(drawEv,1000);
+[["#staffgrid","staff"],["#votes","vote sites"],["#forumgrid","forum categories"]].forEach(([q,n])=>{if(!$(q).innerHTML.trim())$(q).innerHTML=`<p class="note">No ${n} yet.</p>`});
+const AC=window.AudioContext||window.webkitAudioContext;
+function beep(){if(!F.soundEffects||!AC)return;try{const a=new AC(),o=a.createOscillator(),g=a.createGain();o.frequency.value=660;g.gain.value=.05;o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+.08)}catch{}}
+document.addEventListener("click",e=>{if(e.target.closest(".btn"))beep()});
+/* particles */
+const cv=$("#fx"),cx=cv.getContext("2d");let W,H,P=[];
+function size(){W=cv.width=innerWidth;H=cv.height=innerHeight;P=Array.from({length:Math.min(110,W/12|0)},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.8+.3,v:Math.random()*.4+.1,a:Math.random()}))}
+size();addEventListener("resize",size);
+F.particles&&(function tick(){cx.clearRect(0,0,W,H);for(const p of P){p.y-=p.v;p.a+=.02;if(p.y<0){p.y=H;p.x=Math.random()*W}
+ cx.beginPath();cx.arc(p.x,p.y,p.r,0,7);cx.fillStyle=`rgba(80,180,255,${.35+.4*Math.sin(p.a)})`;cx.shadowColor="#00b3ff";cx.shadowBlur=8;cx.fill()}requestAnimationFrame(tick)})();
+addEventListener("pointermove",e=>{$("#cur").style.transform=`translate(${e.clientX}px,${e.clientY}px)`});
+setTimeout(()=>$("#load")?.classList.add("off"),600);
+</script></body></html>

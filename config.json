@@ -1,36 +1,34 @@
 {
-  "branding": {
-    "websiteName": "CosmosMC",
-    "tagline": "EXPLORE. SURVIVE. DOMINATE.",
-    "description": "Aminecraft server for playing.",
-    "logo": "logo.png",
-    "loadingLogo": "",
-    "favicon": "favicon.png",
-    "backgroundImage": ""
+  "name": "CosmosMC",
+  "logo": "/images/cosmosmc-logo.png",
+
+  "colors": {
+    "black": "#05070B",
+    "white": "#FFFFFF",
+    "blue": "#168BFF",
+    "green": "#20E878"
   },
-  "theme": {
-    "primary": "#168BFF",
-    "secondary": "#20E878",
-    "background": "#05070B",
-    "surface": "#10151F",
-    "text": "#FFFFFF",
-    "muted": "#AAB4C3"
-  },
-  "server": {
-    "java": { "enabled": true, "ip": "cosmosmc.play.minekube.net" },
-    "bedrock": { "enabled": true, "ip": "cosmosmc.play.minekube.net", "port"25565:  },
-    "status": { "enabled": true, "refreshInterval": 15000 }
-  },
+
+  "javaIP": "cosmosmc.play.minekube.net",
+  "javaPort": 25565,
+
+  "bedrockIP": "cosmosmc.play.minekube.net",
+  "bedrockPort": 19132,
+
+  "discord": "",
+  "youtube": "",
+
+  "showPlayers": true,
+  "showStatus": true,
+  "animations": true,
+  "particles": true,
+  "sound": false,
+  "maintenance": false,
+
+  "statusRefresh": 15000,
+
+  "tagline": "EXPLORE. SURVIVE. DOMINATE.",
   "navigation": ["Home", "Play", "Store", "Vote", "Leaderboard", "News", "Events", "Staff", "Discord"],
-  "homepage": { "title": "", "subtitle": "" },
-  "social": { "discord": "", "youtube": "",},
-  "discord": { "guildId": "", "description": "Join the community for news, support and events." },
-  "features": {
-    "animations": true, "particles": true, "soundEffects": false, "loadingScreen": true,
-    "playerCounter": true, "leaderboard": true, "store": true, "news": true, "events": true,
-    "maintenanceMode": true
-  },
-  "maintenanceMessage": "We'll be back shortly.",
   "store": {
     "checkoutUrl": "",
     "categories": {
@@ -42,18 +40,11 @@
   "gameModes": [
     { "name": "Survival", "description": "", "image": "", "enabled": false },
     { "name": "SkyBlock", "description": "", "image": "", "enabled": false },
-    { "name": "BedWars", "description": "", "image": "", "enabled": false },
-    { "name": "Practice", "description": "", "image": "", "enabled": false },
-    { "name": "Factions", "description": "", "image": "", "enabled": false },
-    { "name": "Lifesteal", "description": "", "image": "", "enabled": false }
+    { "name": "BedWars", "description": "", "image": "", "enabled": false }
   ],
   "vote": { "sites": [{ "name": "Vote site 1", "url": "" }] },
-  "leaderboard": { "url": "" },
-  "forums": [
-    { "name": "General", "description": "Talk about anything" },
-    { "name": "Support", "description": "Get help" },
-    { "name": "Suggestions", "description": "Shape the server" }
-  ],
+  "leaderboardURL": "",
+  "forums": [{ "name": "General", "description": "Talk about anything" }, { "name": "Support", "description": "Get help" }],
   "staff": [],
   "news": [],
   "events": []
