@@ -70,6 +70,10 @@ th{color:var(--mut);font:700 13px Orbitron}tr:hover td{background:rgba(30,144,25
 nav{transition:.3s}nav.sc{background:rgba(5,7,11,.95)}.noanim *{animation:none!important;transition:none!important}
 #cfgerr{position:relative;z-index:30;background:#3a1010;border-bottom:1px solid #ff3b4e;padding:10px 5vw;font-size:15px}
 #maint{position:fixed;inset:0;z-index:98;background:var(--bg);display:none;place-items:center;text-align:center;padding:20px}#maint.on{display:grid}
+.feat svg{width:34px;height:34px;color:var(--glow);margin-bottom:10px}.feat.wide{grid-column:span 2}@media(max-width:700px){.feat.wide{grid-column:auto}}
+.faq{margin-top:12px;padding:18px 22px}.faq summary{cursor:pointer;font-weight:700;font-size:18px}.faq p{margin-top:10px}.faq[open]{border-color:var(--blue)}
+#sbar{position:fixed;left:0;right:0;bottom:0;z-index:25;display:none;gap:10px;padding:10px 4vw calc(10px + env(safe-area-inset-bottom,0px));background:rgba(5,7,11,.94);backdrop-filter:blur(12px);border-top:1px solid var(--line)}#sbar .btn{flex:1;text-align:center;padding:12px 8px;font-size:14px}
+@media(max-width:860px){#sbar.on{display:flex}body.sb footer{padding-bottom:90px}}
 footer{position:relative;z-index:2;border-top:1px solid var(--line);padding:34px 5vw;text-align:center;color:var(--mut);background:rgba(4,6,13,.8)}
 footer .soc{display:flex;gap:18px;justify-content:center;margin-bottom:14px;flex-wrap:wrap}footer a{color:var(--w);text-decoration:none}footer a:hover{color:var(--glow)}
 @media(max-width:860px){#burger{display:block}nav .links{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;background:rgba(4,6,13,.96);padding:10px 4vw}nav .links.open{display:flex}}
@@ -104,6 +108,8 @@ footer .soc{display:flex;gap:18px;justify-content:center;margin-bottom:14px;flex
    <div class="row"><span class="mini">PORT</span><code>%BP%</code><button class="btn" data-copy="%BP%">COPY PORT</button></div>
    <p class="mini" style="margin-top:12px">Servers → Add Server → enter the IP and port.</p></div>
  </div>
+ <div id="hl" hidden><h2 style="margin-top:36px" id="hlt"></h2><p class="sub" id="hls"></p><div class="grid" id="hlg"></div></div>
+ <div id="faqw" hidden><h2 id="faqt" style="margin-top:36px"></h2><div id="faql"></div></div>
  <div id="modes" hidden><h2 style="margin-top:36px">Game modes</h2><div class="grid" id="modegrid"></div></div>
 </section>
 <section class="page" id="store"><h2>Store</h2><p class="sub">Support CosmosMC and unlock perks.</p>
@@ -121,12 +127,13 @@ footer .soc{display:flex;gap:18px;justify-content:center;margin-bottom:14px;flex
  <div class="card"><h3 id="dname">CosmosMC Discord</h3><p class="sub" id="dinfo">Join for announcements, support and events.</p>
  <div class="btns" style="justify-content:flex-start"><a class="btn p" id="dlink" target="_blank" rel="noopener">JOIN OUR DISCORD</a></div></div></section>
 </main>
+<div id="sbar"><button class="btn p" id="sbcopy">COPY IP</button><a class="btn" id="sbdc" target="_blank" rel="noopener">DISCORD</a></div>
 <footer><img class="fl" data-logo src="/images/cosmosmc-logo.png" alt="CosmosMC" onerror="this.src=FALLBACK"><div class="soc" id="soc"></div>© <span id="yr"></span> <span id="wn"></span>. Not affiliated with Mojang or Microsoft.</footer>
 <script type="module">
 const $=s=>document.querySelector(s),esc=s=>String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const head=n=>`https://mc-heads.net/avatar/${encodeURIComponent(n)}/64`;
 /* ---- config.json loader ---- */
-const DEF={branding:{websiteName:"CosmosMC",tagline:"EXPLORE. SURVIVE. DOMINATE.",description:"CosmosMC Minecraft network.",logo:"/images/cosmosmc-logo.png",loadingLogo:"",favicon:"/images/favicon.png",backgroundImage:""},theme:{primary:"#168BFF",secondary:"#20E878",background:"#05070B",surface:"#10151F",text:"#FFFFFF",muted:"#AAB4C3"},server:{java:{enabled:true,ip:"cosmosmc.play.minekube.net",port:25565},bedrock:{enabled:true,ip:"cosmosmc.play.minekube.net",port:19132},status:{enabled:true,refreshInterval:15000}},navigation:["Home","Play","Store","Vote","Leaderboard","News","Staff","Discord"],homepage:{title:"",subtitle:""},social:{},discord:{guildId:"",description:""},features:{animations:true,particles:true,soundEffects:false,loadingScreen:true,playerCounter:true,leaderboard:true,store:true,news:true,events:true,maintenanceMode:false},maintenanceMessage:"We'll be back shortly.",store:{checkoutUrl:"",categories:{}},gameModes:[],vote:{sites:[]},leaderboard:{url:""},forums:[],staff:[],news:[],events:[]};
+const DEF={branding:{websiteName:"CosmosMC",tagline:"EXPLORE. SURVIVE. DOMINATE.",description:"CosmosMC Minecraft network.",logo:"/images/cosmosmc-logo.png",loadingLogo:"",favicon:"/images/favicon.png",backgroundImage:""},theme:{primary:"#168BFF",secondary:"#20E878",background:"#05070B",surface:"#10151F",text:"#FFFFFF",muted:"#AAB4C3"},server:{java:{enabled:true,ip:"cosmosmc.play.minekube.net",port:25565},bedrock:{enabled:true,ip:"cosmosmc.play.minekube.net",port:19132},status:{enabled:true,refreshInterval:15000}},navigation:["Home","Play","Store","Vote","Leaderboard","News","Staff","Discord"],homepage:{title:"",subtitle:""},social:{},discord:{guildId:"",description:""},features:{animations:true,particles:true,soundEffects:false,loadingScreen:true,playerCounter:true,leaderboard:true,store:true,news:true,events:true,maintenanceMode:false},maintenanceMessage:"We'll be back shortly.",store:{checkoutUrl:"",categories:{}},gameModes:[],vote:{sites:[]},leaderboard:{url:""},forums:[],staff:[],news:[],events:[],highlights:[],faq:[],highlightsTitle:"Server features",highlightsSubtitle:"",faqTitle:"Questions, answered",stickyMobileBar:true};
 function merge(d,u,p,e){if(u===undefined||u===null)return d;
  if(Array.isArray(d)){if(Array.isArray(u))return u;e.push(p+" must be a list");return d}
  if(typeof d==="object"){if(typeof u!=="object"||Array.isArray(u)){e.push(p+" must be an object");return d}const o={...u};for(const k in d)o[k]=merge(d[k],u[k],p?p+"."+k:k,e);return o}
@@ -136,7 +143,7 @@ function check(c,e){for(const k in c.theme)if(!/^#[0-9a-f]{6}$/i.test(c.theme[k]
  if(c.server.status.refreshInterval<5000){e.push("server.status.refreshInterval must be at least 5000 ms");c.server.status.refreshInterval=5000}}
 let raw={};const errs=[];
 try{const r=await fetch("/config.json",{cache:"no-store"});if(!r.ok)throw 0;raw=await r.json()}catch{errs.push("Could not read or parse config.json. Using defaults. Serve the folder over http(s); opening index.html directly won't load it.")}
-const K=raw.colors||{},N={branding:{websiteName:raw.name,tagline:raw.tagline,description:raw.description,logo:raw.logo,favicon:raw.favicon,loadingLogo:raw.loadingLogo,backgroundImage:raw.backgroundImage},theme:{background:K.black,text:K.white,primary:K.blue,secondary:K.green},server:{java:{ip:raw.javaIP,port:raw.javaPort},bedrock:{ip:raw.bedrockIP,port:raw.bedrockPort},status:{enabled:raw.showStatus,refreshInterval:raw.statusRefresh}},social:{discord:raw.discord,youtube:raw.youtube,tiktok:raw.tiktok,instagram:raw.instagram},features:{playerCounter:raw.showPlayers,animations:raw.animations,particles:raw.particles,soundEffects:raw.sound,maintenanceMode:raw.maintenance,loadingScreen:raw.loadingScreen},navigation:raw.navigation,homepage:{title:raw.homepageTitle,subtitle:raw.homepageSubtitle},maintenanceMessage:raw.maintenanceMessage,store:raw.store,gameModes:raw.gameModes,vote:raw.vote,leaderboard:{url:raw.leaderboardURL},discord:{guildId:raw.discordGuildId,description:raw.discordText},forums:raw.forums,staff:raw.staff,news:raw.news,events:raw.events};
+const K=raw.colors||{},N={branding:{websiteName:raw.name,tagline:raw.tagline,description:raw.description,logo:raw.logo,favicon:raw.favicon,loadingLogo:raw.loadingLogo,backgroundImage:raw.backgroundImage},theme:{background:K.black,text:K.white,primary:K.blue,secondary:K.green},server:{java:{ip:raw.javaIP,port:raw.javaPort},bedrock:{ip:raw.bedrockIP,port:raw.bedrockPort},status:{enabled:raw.showStatus,refreshInterval:raw.statusRefresh}},social:{discord:raw.discord,youtube:raw.youtube,tiktok:raw.tiktok,instagram:raw.instagram},features:{playerCounter:raw.showPlayers,animations:raw.animations,particles:raw.particles,soundEffects:raw.sound,maintenanceMode:raw.maintenance,loadingScreen:raw.loadingScreen},navigation:raw.navigation,homepage:{title:raw.homepageTitle,subtitle:raw.homepageSubtitle},maintenanceMessage:raw.maintenanceMessage,store:raw.store,gameModes:raw.gameModes,vote:raw.vote,leaderboard:{url:raw.leaderboardURL},discord:{guildId:raw.discordGuildId,description:raw.discordText},forums:raw.forums,staff:raw.staff,news:raw.news,events:raw.events,highlights:raw.highlights,faq:raw.faq,highlightsTitle:raw.highlightsTitle,highlightsSubtitle:raw.highlightsSubtitle,faqTitle:raw.faqTitle,stickyMobileBar:raw.stickyMobileBar};
 const C=merge(DEF,N,"",errs);check(C,errs);
 const B=C.branding,F=C.features,T=C.theme,SV=C.server,RS=document.documentElement.style;
 const CFG={IP:SV.java.ip,JAVA_PORT:String(SV.java.port),BIP:SV.bedrock.ip,BEDROCK_PORT:String(SV.bedrock.port),REFRESH_MS:SV.status.refreshInterval,DISCORD:C.social.discord||"",DISCORD_GUILD_ID:C.discord.guildId,STORE_URL:C.store.checkoutUrl,LEADERBOARD_URL:C.leaderboard.url,
@@ -161,17 +168,17 @@ if(!SV.java.enabled){document.querySelectorAll(".ed")[0].hidden=true;$("#jdot").
 addEventListener("scroll",()=>$("nav").classList.toggle("sc",scrollY>30),{passive:true});
 /* nav */
 const ALIAS={ranks:"store"},OFF={store:!F.store,leaderboard:!F.leaderboard,news:!F.news,events:!F.events};
-const KNOWN=["home","play","store","vote","leaderboard","news","events","forums","staff","discord"];
+const KNOWN=["home","play","features","faq","store","vote","leaderboard","news","events","forums","staff","discord"];
 const NAV=C.navigation.map(n=>typeof n==="string"?{label:n,page:ALIAS[n.toLowerCase()]||n.toLowerCase()}:{label:n.label,page:(n.page||"").toLowerCase(),href:n.href}).filter(n=>n.label&&(n.href||(KNOWN.includes(n.page)&&!OFF[n.page])));
 const PAGES=["home",...NAV.filter(n=>!n.href).map(n=>n.page)];
 $(".links").style.cssText="";$(".links").className="links";
 $(".links").innerHTML=NAV.map(n=>n.href?`<a class="l" href="${esc(n.href)}" target="_blank" rel="noopener">${esc(n.label)}</a>`:`<a class="l" href="#${n.page}" data-p="${n.page}">${esc(n.label)}</a>`).join("");
 $("nav").insertBefore($(".links"),$("#burger"));
 $("#burger").onclick=()=>$(".links").classList.toggle("open");
-function route(){let p=location.hash.slice(1);const play=p==="play";if(play)p="home";if(!PAGES.includes(p))p="home";
+function route(){let p=location.hash.slice(1);const sec={play:"joinsec",features:"hl",faq:"faqw"}[p],play=!!sec;if(play)p="home";if(!PAGES.includes(p))p="home";
  document.querySelectorAll(".page").forEach(e=>e.classList.toggle("on",e.id===p));
  document.querySelectorAll("nav a.l").forEach(a=>a.classList.toggle("on",a.dataset.p===p));
- $(".links").classList.remove("open");play?setTimeout(()=>$("#joinsec").scrollIntoView({behavior:"smooth"}),60):scrollTo({top:0});}
+ $(".links").classList.remove("open");play?setTimeout(()=>document.getElementById(sec).scrollIntoView({behavior:"smooth"}),60):scrollTo({top:0});}
 addEventListener("hashchange",route);route();
 /* ip buttons */
 const addr=CFG.IP+(CFG.JAVA_PORT&&CFG.JAVA_PORT!=="25565"?":"+CFG.JAVA_PORT:""); // copied/shown address (default port is implicit)
@@ -238,6 +245,15 @@ drawEv();setInterval(drawEv,1000);
 const AC=window.AudioContext||window.webkitAudioContext;
 function beep(){if(!F.soundEffects||!AC)return;try{const a=new AC(),o=a.createOscillator(),g=a.createGain();o.frequency.value=660;g.gain.value=.05;o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+.08)}catch{}}
 document.addEventListener("click",e=>{if(e.target.closest(".btn"))beep()});
+const ICONS={"pickaxe": "M14 6l4 4M4 20l8-8M13.5 4.5c3.5-1 6.5 0 8 1.5-1.5-.5-3.5-.5-5 1M12 7c-3 0-5.5 1.5-7 4M17 11c0 3-1.5 5.5-4 7", "coins": "M12 5c-4 0-7 1.1-7 2.5S8 10 12 10s7-1.1 7-2.5S16 5 12 5zM5 7.5v4C5 12.9 8 14 12 14s7-1.1 7-2.5v-4M5 11.5v4C5 16.9 8 18 12 18s7-1.1 7-2.5v-4", "home": "M4 11l8-7 8 7M6 10v9h12v-9M10 19v-5h4v5", "gift": "M4 9h16v4H4zM6 13v7h12v-7M12 9v11M12 9c-1.5-3-5-3.5-5-1.5S10 9 12 9zM12 9c1.5-3 5-3.5 5-1.5S14 9 12 9z", "shield": "M12 3l7 3v5c0 5-3 8.5-7 10-4-1.5-7-5-7-10V6zM9 12l2 2 4-4", "party": "M4 20l5-12 7 7zM13 5l1 2M17 8l2-1M16 3v2M19 12l2 .5", "sword": "M5 19l9-9M14 10l5-5v-1h-1l-5 5M7 17l-2 2M9 15l-2 2", "heart": "M12 20s-7-4.5-7-10a4 4 0 017-2.5A4 4 0 0119 10c0 5.5-7 10-7 10z", "users": "M9 11a3 3 0 100-6 3 3 0 000 6zM3 19c0-3 2.5-5 6-5s6 2 6 5M16 5a3 3 0 010 6M18 14c2 .5 3 2 3 5", "star": "M12 4l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8z", "trophy": "M8 4h8v5a4 4 0 01-8 0zM8 6H5v1a3 3 0 003 3M16 6h3v1a3 3 0 01-3 3M12 13v4M8 20h8M10 17h4", "map": "M3 6l6-2 6 2 6-2v14l-6 2-6-2-6 2zM9 4v14M15 6v14", "bolt": "M13 3L5 13h6l-1 8 8-10h-6z", "chat": "M4 5h16v11H9l-5 4z", "cube": "M12 3l8 4.5v9L12 21l-8-4.5v-9zM12 12l8-4.5M12 12L4 7.5M12 12v9"};
+const HL=C.highlights.filter(x=>x&&x.title);
+if(HL.length){$("#hl").hidden=false;$("#hlt").textContent=C.highlightsTitle;$("#hls").textContent=C.highlightsSubtitle;
+ $("#hlg").innerHTML=HL.map(x=>`<div class="card feat${x.wide?" wide":""}"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="${ICONS[x.icon]||ICONS.cube}"/></svg><h3>${esc(x.title)}</h3><p class="sub">${esc(x.text||"")}</p></div>`).join("")}
+const FQ=C.faq.filter(x=>x&&x.q);
+if(FQ.length){$("#faqw").hidden=false;$("#faqt").textContent=C.faqTitle;$("#faql").innerHTML=FQ.map(x=>`<details class="card faq"><summary>${esc(x.q)}</summary><p class="sub">${esc(x.a||"")}</p></details>`).join("")}
+if(C.stickyMobileBar){$("#sbar").classList.add("on");document.body.classList.add("sb");
+ $("#sbcopy").onclick=async()=>{await doCopy(CFG.IP);const b=$("#sbcopy");b.textContent="✓ COPIED!";setTimeout(()=>b.textContent="COPY IP",1600)};
+ if(CFG.DISCORD)$("#sbdc").href=CFG.DISCORD;else $("#sbdc").hidden=true}
 /* particles */
 const cv=$("#fx"),cx=cv.getContext("2d");let W,H,P=[];
 function size(){W=cv.width=innerWidth;H=cv.height=innerHeight;P=Array.from({length:Math.min(110,W/12|0)},()=>({x:Math.random()*W,y:Math.random()*H,r:Math.random()*1.8+.3,v:Math.random()*.4+.1,a:Math.random()}))}

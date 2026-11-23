@@ -1,0 +1,179 @@
+{
+  "name": "CosmosMC",
+  "logo": "/images/cosmosmc-logo.png",
+  "colors": {
+    "black": "#05070B",
+    "white": "#FFFFFF",
+    "blue": "#168BFF",
+    "green": "#20E878"
+  },
+  "javaIP": "cosmosmc.play.minekube.net",
+  "javaPort": 25565,
+  "bedrockIP": "cosmosmc.play.minekube.net",
+  "bedrockPort": 19132,
+  "discord": "https://discord.gg/S763GafZPR",
+  "youtube": "",
+  "showPlayers": true,
+  "showStatus": true,
+  "animations": true,
+  "particles": true,
+  "sound": false,
+  "maintenance": false,
+  "statusRefresh": 15000,
+  "tagline": "EXPLORE. SURVIVE. DOMINATE.",
+  "navigation": [
+    "Home",
+    "Play",
+    "Features",
+    "Store",
+    "Vote",
+    "Leaderboard",
+    "News",
+    "Events",
+    "Staff",
+    "FAQ",
+    "Discord"
+  ],
+  "store": {
+    "checkoutUrl": "",
+    "categories": {
+      "VIP": [
+        {
+          "name": "Nova",
+          "price": 9.99,
+          "description": "Entry rank.",
+          "benefits": [
+            "Colored chat",
+            "Starter kit"
+          ],
+          "featured": false,
+          "discount": ""
+        }
+      ],
+      "Premium": [
+        {
+          "name": "Quasar",
+          "price": 19.99,
+          "description": "Most popular.",
+          "benefits": [
+            "Everything in Nova",
+            "Extra homes"
+          ],
+          "featured": true,
+          "discount": ""
+        }
+      ],
+      "Legendary": [
+        {
+          "name": "Galaxy",
+          "price": 34.99,
+          "description": "Top rank.",
+          "benefits": [
+            "Everything in Quasar",
+            "Custom prefix"
+          ],
+          "featured": false,
+          "discount": ""
+        }
+      ]
+    }
+  },
+  "gameModes": [
+    {
+      "name": "Survival",
+      "description": "",
+      "image": "",
+      "enabled": false
+    },
+    {
+      "name": "SkyBlock",
+      "description": "",
+      "image": "",
+      "enabled": false
+    },
+    {
+      "name": "BedWars",
+      "description": "",
+      "image": "",
+      "enabled": false
+    }
+  ],
+  "vote": {
+    "sites": [
+      {
+        "name": "Vote site 1",
+        "url": ""
+      }
+    ]
+  },
+  "leaderboardURL": "",
+  "forums": [
+    {
+      "name": "General",
+      "description": "Talk about anything"
+    },
+    {
+      "name": "Support",
+      "description": "Get help"
+    }
+  ],
+  "staff": [],
+  "news": [],
+  "events": [],
+  "highlightsTitle": "Server features",
+  "highlightsSubtitle": "Everything you need for a great adventure.",
+  "highlights": [
+    {
+      "icon": "pickaxe",
+      "title": "Survival",
+      "text": "Classic survival with claims that protect your builds from griefers.",
+      "wide": true
+    },
+    {
+      "icon": "coins",
+      "title": "Player economy",
+      "text": "Earn money, open shops and trade with other players.",
+      "wide": false
+    },
+    {
+      "icon": "home",
+      "title": "Land claims",
+      "text": "Claim your land in seconds and invite your friends.",
+      "wide": false
+    },
+    {
+      "icon": "gift",
+      "title": "Daily rewards",
+      "text": "Log in every day for crates, keys and free items.",
+      "wide": true
+    },
+    {
+      "icon": "shield",
+      "title": "Anti-grief",
+      "text": "Active staff and rollback tools keep the server fair.",
+      "wide": true
+    },
+    {
+      "icon": "party",
+      "title": "Weekly events",
+      "text": "Build contests, PvP tournaments and seasonal events.",
+      "wide": false
+    }
+  ],
+  "faqTitle": "Questions, answered",
+  "faq": [
+    {
+      "q": "Do I need to be whitelisted?",
+      "a": "No. Copy the IP, add the server in Multiplayer and you can join straight away."
+    },
+    {
+      "q": "How do I get help or report a player?",
+      "a": "Join our Discord and open a ticket. Staff are active every day."
+    },
+    {
+      "q": "Is the server free to play?",
+      "a": "Yes. Everything needed to enjoy the server is free."
+    }
+  ],
+  "stickyMobileBar": true
+}
