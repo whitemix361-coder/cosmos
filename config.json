@@ -2,7 +2,7 @@
   "branding": {
     "websiteName": "CosmosMC",
     "tagline": "EXPLORE. SURVIVE. DOMINATE.",
-    "description": "CosmosMC is a premium Minecraft network. Join Java or Bedrock.",
+    "description": "Aminecraft server for playing.",
     "logo": "logo.png",
     "loadingLogo": "",
     "favicon": "favicon.png",
@@ -17,8 +17,8 @@
     "muted": "#AAB4C3"
   },
   "server": {
-    "java": { "enabled": true, "ip": "cosmosmc.play.minekube.net", "port": 25565 },
-    "bedrock": { "enabled": true, "ip": "cosmosmc.play.minekube.net", "port": 19132 },
+    "java": { "enabled": true, "ip": "cosmosmc.play.minekube.net" },
+    "bedrock": { "enabled": true, "ip": "cosmosmc.play.minekube.net", "port"25565:  },
     "status": { "enabled": true, "refreshInterval": 15000 }
   },
   "navigation": ["Home", "Play", "Store", "Vote", "Leaderboard", "News", "Events", "Staff", "Discord"],
